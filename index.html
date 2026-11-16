@@ -1,0 +1,1998 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Literary Journey — A Great Books Digital Portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,800;1,400;1,600&family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+    <style>
+        /* ============================================
+           CSS VARIABLES & RESET
+           ============================================ */
+        :root {
+            --color-bg: #faf8f5;
+            --color-surface: #ffffff;
+            --color-primary: #1a2744;
+            --color-primary-light: #2c3e6b;
+            --color-accent: #b8860b;
+            --color-accent-light: #d4a843;
+            --color-text: #2d2d2d;
+            --color-text-light: #5a5a5a;
+            --color-text-muted: #8a8a8a;
+            --color-border: #e8e2d9;
+            --color-border-light: #f0ebe3;
+            --color-hero-overlay: rgba(18, 28, 52, 0.82);
+            --font-display: 'Playfair Display', Georgia, serif;
+            --font-body: 'Lora', 'Times New Roman', serif;
+            --font-ui: 'Inter', 'Segoe UI', sans-serif;
+            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
+            --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.08), 0 2px 6px rgba(0, 0, 0, 0.04);
+            --shadow-lg: 0 10px 40px rgba(0, 0, 0, 0.1), 0 4px 12px rgba(0, 0, 0, 0.05);
+            --radius: 12px;
+            --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --max-width: 1200px;
+        }
+
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 80px;
+        }
+
+        body {
+            font-family: var(--font-body);
+            color: var(--color-text);
+            background-color: var(--color-bg);
+            line-height: 1.75;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        a {
+            color: var(--color-accent);
+            text-decoration: none;
+            transition: color var(--transition);
+        }
+
+        a:hover {
+            color: var(--color-accent-light);
+        }
+
+        /* ============================================
+           NAVIGATION
+           ============================================ */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--color-border-light);
+            transition: box-shadow var(--transition), background var(--transition);
+        }
+
+        .navbar.scrolled {
+            box-shadow: var(--shadow-md);
+            background: rgba(255, 255, 255, 0.97);
+        }
+
+        .nav-container {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 72px;
+        }
+
+        .nav-logo {
+            font-family: var(--font-display);
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--color-primary);
+            letter-spacing: -0.02em;
+        }
+
+        .nav-logo span {
+            color: var(--color-accent);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 0.25rem;
+        }
+
+        .nav-links a {
+            font-family: var(--font-ui);
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--color-text-light);
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            transition: all var(--transition);
+            letter-spacing: 0.01em;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--color-primary);
+            background: rgba(26, 39, 68, 0.06);
+        }
+
+        /* Hamburger */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 5px;
+            padding: 8px;
+            border-radius: 8px;
+            transition: background var(--transition);
+            background: none;
+            border: none;
+        }
+
+        .hamburger:hover {
+            background: rgba(0, 0, 0, 0.04);
+        }
+
+        .hamburger span {
+            width: 22px;
+            height: 2px;
+            background: var(--color-primary);
+            border-radius: 2px;
+            transition: all var(--transition);
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(5px, -5px);
+        }
+
+        /* Mobile Nav */
+        .mobile-nav {
+            display: none;
+            position: fixed;
+            top: 72px;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(20px);
+            z-index: 999;
+            padding: 2rem;
+            opacity: 0;
+            transform: translateY(-10px);
+            transition: all 0.35s ease;
+        }
+
+        .mobile-nav.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .mobile-nav a {
+            display: block;
+            font-family: var(--font-ui);
+            font-size: 1.125rem;
+            font-weight: 500;
+            color: var(--color-text);
+            padding: 1rem 0;
+            border-bottom: 1px solid var(--color-border-light);
+            transition: color var(--transition);
+        }
+
+        .mobile-nav a:hover {
+            color: var(--color-accent);
+        }
+
+        /* ============================================
+           HERO SECTION
+           ============================================ */
+        .hero {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background:
+                linear-gradient(135deg, rgba(18, 28, 52, 0.88), rgba(44, 62, 107, 0.78)),
+                url('https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=1920&q=80') center/cover no-repeat;
+            color: #fff;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse at 30% 50%, rgba(184, 134, 11, 0.15) 0%, transparent 70%);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+            padding: 2rem;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            font-family: var(--font-ui);
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--color-accent-light);
+            border: 1px solid rgba(212, 168, 67, 0.4);
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            margin-bottom: 2rem;
+        }
+
+        .hero h1 {
+            font-family: var(--font-display);
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            font-weight: 800;
+            line-height: 1.15;
+            margin-bottom: 1.5rem;
+            letter-spacing: -0.02em;
+        }
+
+        .hero h1 em {
+            font-style: italic;
+            color: var(--color-accent-light);
+        }
+
+        .hero p {
+            font-family: var(--font-body);
+            font-size: clamp(1rem, 2vw, 1.25rem);
+            color: rgba(255, 255, 255, 0.8);
+            max-width: 600px;
+            margin: 0 auto 2.5rem;
+            line-height: 1.8;
+        }
+
+        .hero-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-family: var(--font-ui);
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--color-primary);
+            background: var(--color-accent-light);
+            padding: 0.875rem 2rem;
+            border-radius: 50px;
+            transition: all var(--transition);
+            box-shadow: 0 4px 20px rgba(184, 134, 11, 0.3);
+        }
+
+        .hero-cta:hover {
+            background: #e8be4a;
+            color: var(--color-primary);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 30px rgba(184, 134, 11, 0.4);
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            color: rgba(255, 255, 255, 0.5);
+            font-family: var(--font-ui);
+            font-size: 0.7rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            animation: float 2s ease-in-out infinite;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateX(-50%) translateY(0);
+            }
+
+            50% {
+                transform: translateX(-50%) translateY(-8px);
+            }
+        }
+
+        .scroll-indicator svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        /* ============================================
+           SECTIONS — GENERAL
+           ============================================ */
+        .section {
+            padding: 6rem 2rem;
+        }
+
+        .section-alt {
+            background: var(--color-surface);
+        }
+
+        .container {
+            max-width: var(--max-width);
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-number {
+            font-family: var(--font-ui);
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--color-accent);
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .section-title {
+            font-family: var(--font-display);
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 700;
+            color: var(--color-primary);
+            margin-bottom: 1rem;
+            letter-spacing: -0.02em;
+        }
+
+        .section-subtitle {
+            font-family: var(--font-body);
+            font-size: 1.1rem;
+            color: var(--color-text-light);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .divider {
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--color-accent), var(--color-accent-light));
+            border-radius: 2px;
+            margin: 1.25rem auto 0;
+        }
+
+        /* ============================================
+           STUDENT PROFILE
+           ============================================ */
+        .profile-grid {
+            display: grid;
+            grid-template-columns: 380px 1fr;
+            gap: 4rem;
+            align-items: start;
+        }
+
+        .profile-photo-wrapper {
+            position: relative;
+        }
+
+        .profile-photo {
+            width: 100%;
+            aspect-ratio: 3/4;
+            object-fit: cover;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-lg);
+            background: var(--color-border-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .profile-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .photo-placeholder {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--color-primary-light), var(--color-primary));
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: rgba(255, 255, 255, 0.7);
+            font-family: var(--font-ui);
+            font-size: 0.875rem;
+            gap: 0.75rem;
+        }
+
+        .photo-placeholder svg {
+            width: 64px;
+            height: 64px;
+            opacity: 0.5;
+        }
+
+        .profile-photo-wrapper::after {
+            content: '';
+            position: absolute;
+            top: -12px;
+            right: -12px;
+            width: 100%;
+            height: 100%;
+            border: 2px solid var(--color-accent);
+            border-radius: var(--radius);
+            z-index: -1;
+            opacity: 0.3;
+        }
+
+        .profile-info h3 {
+            font-family: var(--font-display);
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--color-primary);
+            margin-bottom: 0.25rem;
+        }
+
+        .profile-meta {
+            font-family: var(--font-ui);
+            font-size: 0.9rem;
+            color: var(--color-accent);
+            font-weight: 500;
+            margin-bottom: 2rem;
+        }
+
+        .profile-section {
+            margin-bottom: 2rem;
+        }
+
+        .profile-section h4 {
+            font-family: var(--font-display);
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: var(--color-primary);
+            margin-bottom: 0.75rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--color-border-light);
+        }
+
+        .profile-section p {
+            color: var(--color-text-light);
+            line-height: 1.85;
+        }
+
+        .profile-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .profile-tag {
+            font-family: var(--font-ui);
+            font-size: 0.8rem;
+            font-weight: 500;
+            background: rgba(184, 134, 11, 0.08);
+            color: var(--color-accent);
+            padding: 0.375rem 1rem;
+            border-radius: 50px;
+            border: 1px solid rgba(184, 134, 11, 0.15);
+        }
+
+        /* ============================================
+           LITERARY ANALYSES
+           ============================================ */
+        .analyses-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+            gap: 2rem;
+        }
+
+        .analysis-card {
+            background: var(--color-surface);
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--color-border-light);
+            transition: all var(--transition);
+            cursor: pointer;
+        }
+
+        .analysis-card:hover {
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-4px);
+        }
+
+        .analysis-card-image {
+            height: 200px;
+            background: linear-gradient(135deg, var(--color-primary), var(--color-primary-light));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .analysis-card-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .analysis-card-number {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            width: 36px;
+            height: 36px;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-ui);
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .analysis-card-lens {
+            position: absolute;
+            bottom: 1rem;
+            right: 1rem;
+            font-family: var(--font-ui);
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: #fff;
+            background: rgba(184, 134, 11, 0.85);
+            padding: 0.35rem 0.85rem;
+            border-radius: 50px;
+        }
+
+        .analysis-icon {
+            color: rgba(255, 255, 255, 0.2);
+            font-family: var(--font-display);
+            font-size: 5rem;
+            font-style: italic;
+        }
+
+        .analysis-card-body {
+            padding: 1.75rem;
+        }
+
+        .analysis-card-body h3 {
+            font-family: var(--font-display);
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--color-primary);
+            margin-bottom: 0.25rem;
+            line-height: 1.35;
+        }
+
+        .analysis-card-author {
+            font-family: var(--font-ui);
+            font-size: 0.85rem;
+            color: var(--color-accent);
+            font-weight: 500;
+            margin-bottom: 1rem;
+        }
+
+        .analysis-card-body p {
+            font-size: 0.95rem;
+            color: var(--color-text-light);
+            line-height: 1.75;
+            display: -webkit-box;
+            -webkit-line-clamp: 4;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .read-more-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            margin-top: 1rem;
+            font-family: var(--font-ui);
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--color-accent);
+            cursor: pointer;
+            border: none;
+            background: none;
+            padding: 0;
+            transition: gap var(--transition);
+        }
+
+        .read-more-btn:hover {
+            gap: 0.7rem;
+        }
+
+        /* Full analysis modal */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(4px);
+            z-index: 2000;
+            padding: 2rem;
+            overflow-y: auto;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal-overlay.show {
+            opacity: 1;
+        }
+
+        .modal-content {
+            max-width: 800px;
+            margin: 2rem auto;
+            background: var(--color-surface);
+            border-radius: var(--radius);
+            padding: 3rem;
+            position: relative;
+            transform: translateY(20px);
+            transition: transform 0.3s ease;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .modal-overlay.show .modal-content {
+            transform: translateY(0);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1.25rem;
+            right: 1.25rem;
+            width: 40px;
+            height: 40px;
+            border: none;
+            background: var(--color-bg);
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            color: var(--color-text-light);
+            transition: all var(--transition);
+        }
+
+        .modal-close:hover {
+            background: var(--color-border);
+            color: var(--color-text);
+        }
+
+        .modal-lens-badge {
+            display: inline-block;
+            font-family: var(--font-ui);
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--color-accent);
+            background: rgba(184, 134, 11, 0.08);
+            border: 1px solid rgba(184, 134, 11, 0.2);
+            padding: 0.4rem 1rem;
+            border-radius: 50px;
+            margin-bottom: 1rem;
+        }
+
+        .modal-content h2 {
+            font-family: var(--font-display);
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--color-primary);
+            margin-bottom: 0.25rem;
+        }
+
+        .modal-author {
+            font-family: var(--font-ui);
+            font-size: 0.9rem;
+            color: var(--color-accent);
+            font-weight: 500;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--color-border-light);
+        }
+
+        .modal-content .analysis-text {
+            font-size: 1.05rem;
+            line-height: 1.9;
+            color: var(--color-text);
+        }
+
+        .modal-content .analysis-text p {
+            margin-bottom: 1.25rem;
+        }
+
+        /* ============================================
+           FAVORITE MASTERPIECE
+           ============================================ */
+        .favorite-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .favorite-image {
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
+            aspect-ratio: 3/4;
+            background: linear-gradient(135deg, var(--color-primary), var(--color-primary-light));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .favorite-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .favorite-image-placeholder {
+            color: rgba(255, 255, 255, 0.15);
+            font-family: var(--font-display);
+            font-size: 8rem;
+            font-style: italic;
+        }
+
+        .favorite-info h3 {
+            font-family: var(--font-display);
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--color-primary);
+            margin-bottom: 0.25rem;
+        }
+
+        .favorite-author {
+            font-family: var(--font-ui);
+            font-size: 1rem;
+            color: var(--color-accent);
+            font-weight: 500;
+            margin-bottom: 1.5rem;
+        }
+
+        .favorite-info p {
+            color: var(--color-text-light);
+            margin-bottom: 1.25rem;
+            line-height: 1.85;
+        }
+
+        .favorite-info h4 {
+            font-family: var(--font-display);
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: var(--color-primary);
+            margin-top: 2rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .favorite-quote {
+            position: relative;
+            padding: 1.75rem 2rem;
+            background: rgba(184, 134, 11, 0.05);
+            border-left: 4px solid var(--color-accent);
+            border-radius: 0 var(--radius) var(--radius) 0;
+            margin: 2rem 0;
+        }
+
+        .favorite-quote p {
+            font-style: italic;
+            color: var(--color-text) !important;
+            font-size: 1.05rem;
+        }
+
+        .favorite-quote cite {
+            display: block;
+            margin-top: 0.75rem;
+            font-style: normal;
+            font-family: var(--font-ui);
+            font-size: 0.85rem;
+            color: var(--color-accent);
+        }
+
+        /* ============================================
+           SUMMARY OF LEARNING
+           ============================================ */
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+        }
+
+        .summary-card {
+            background: var(--color-surface);
+            border-radius: var(--radius);
+            padding: 2.5rem;
+            border: 1px solid var(--color-border-light);
+            box-shadow: var(--shadow-sm);
+            transition: all var(--transition);
+        }
+
+        .summary-card:hover {
+            box-shadow: var(--shadow-md);
+            border-color: var(--color-border);
+        }
+
+        .summary-card-icon {
+            width: 52px;
+            height: 52px;
+            background: rgba(184, 134, 11, 0.08);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            color: var(--color-accent);
+        }
+
+        .summary-card-icon svg {
+            width: 24px;
+            height: 24px;
+        }
+
+        .summary-card h3 {
+            font-family: var(--font-display);
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--color-primary);
+            margin-bottom: 0.75rem;
+        }
+
+        .summary-card p {
+            color: var(--color-text-light);
+            line-height: 1.8;
+            font-size: 0.95rem;
+        }
+
+        /* ============================================
+           PERSONAL REFLECTION
+           ============================================ */
+        .reflection-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .reflection-question {
+            margin-bottom: 3rem;
+            padding-bottom: 3rem;
+            border-bottom: 1px solid var(--color-border-light);
+        }
+
+        .reflection-question:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .reflection-question h3 {
+            font-family: var(--font-display);
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--color-primary);
+            margin-bottom: 1rem;
+            line-height: 1.5;
+        }
+
+        .reflection-question h3 span {
+            display: inline-block;
+            width: 32px;
+            height: 32px;
+            background: var(--color-accent);
+            color: #fff;
+            font-family: var(--font-ui);
+            font-size: 0.8rem;
+            font-weight: 700;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 32px;
+            margin-right: 0.75rem;
+            vertical-align: middle;
+        }
+
+        .reflection-question p {
+            color: var(--color-text-light);
+            line-height: 1.9;
+            padding-left: 2.75rem;
+        }
+
+        .reflection-question ul {
+            color: var(--color-text-light);
+            line-height: 1.9;
+            padding-left: 4.75rem;
+            margin-top: 0.5rem;
+        }
+
+        .reflection-question ul li {
+            margin-bottom: 0.75rem;
+        }
+
+        /* ============================================
+           FOOTER
+           ============================================ */
+        .footer {
+            background: var(--color-primary);
+            color: rgba(255, 255, 255, 0.7);
+            padding: 4rem 2rem 2rem;
+        }
+
+        .footer-content {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .footer-logo {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 1rem;
+        }
+
+        .footer-logo span {
+            color: var(--color-accent-light);
+        }
+
+        .footer p {
+            font-family: var(--font-ui);
+            font-size: 0.875rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-divider {
+            width: 100%;
+            height: 1px;
+            background: rgba(255, 255, 255, 0.1);
+            margin: 2rem 0;
+        }
+
+        .footer-bottom {
+            font-family: var(--font-ui);
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        /* ============================================
+           BACK TO TOP
+           ============================================ */
+        .back-to-top {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 48px;
+            height: 48px;
+            background: var(--color-primary);
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--shadow-md);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: all var(--transition);
+            z-index: 100;
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .back-to-top:hover {
+            background: var(--color-accent);
+            transform: translateY(-2px);
+        }
+
+        /* ============================================
+           ANIMATIONS
+           ============================================ */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ============================================
+           RESPONSIVE DESIGN
+           ============================================ */
+
+        /* Tablet: 768px–1024px */
+        @media (max-width: 1024px) {
+            .section {
+                padding: 4rem 1.5rem;
+            }
+
+            .profile-grid {
+                grid-template-columns: 300px 1fr;
+                gap: 3rem;
+            }
+
+            .favorite-layout {
+                gap: 3rem;
+            }
+
+            .analyses-grid {
+                grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            }
+        }
+
+        /* Tablet portrait */
+        @media (max-width: 860px) {
+            .hamburger {
+                display: flex;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .mobile-nav {
+                display: block;
+            }
+
+            .profile-grid {
+                grid-template-columns: 1fr;
+                gap: 2.5rem;
+            }
+
+            .profile-photo-wrapper {
+                max-width: 340px;
+                margin: 0 auto;
+            }
+
+            .favorite-layout {
+                grid-template-columns: 1fr;
+                gap: 2.5rem;
+            }
+
+            .favorite-image {
+                max-width: 400px;
+                margin: 0 auto;
+            }
+
+            .summary-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .modal-content {
+                padding: 2rem;
+                margin: 1rem auto;
+            }
+        }
+
+        /* Mobile: <576px */
+        @media (max-width: 576px) {
+            html {
+                scroll-padding-top: 72px;
+            }
+
+            .section {
+                padding: 3rem 1rem;
+            }
+
+            .section-header {
+                margin-bottom: 2.5rem;
+            }
+
+            .nav-container {
+                padding: 0 1rem;
+            }
+
+            .hero-content {
+                padding: 1rem;
+            }
+
+            .hero-badge {
+                font-size: 0.65rem;
+                padding: 0.4rem 1rem;
+            }
+
+            .profile-photo-wrapper {
+                max-width: 280px;
+            }
+
+            .profile-photo-wrapper::after {
+                display: none;
+            }
+
+            .profile-info h3 {
+                font-size: 1.5rem;
+            }
+
+            .analyses-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .analysis-card-image {
+                height: 160px;
+            }
+
+            .favorite-info h3 {
+                font-size: 1.5rem;
+            }
+
+            .favorite-quote {
+                padding: 1.25rem 1.5rem;
+            }
+
+            .favorite-image {
+                max-width: 100%;
+            }
+
+            .summary-card {
+                padding: 1.75rem;
+            }
+
+            .reflection-question p {
+                padding-left: 0;
+                margin-top: 0.5rem;
+            }
+
+            .reflection-question h3 {
+                font-size: 1.15rem;
+            }
+
+            .modal-content {
+                padding: 1.5rem;
+                border-radius: 8px;
+            }
+
+            .modal-overlay {
+                padding: 1rem;
+            }
+
+            .back-to-top {
+                bottom: 1rem;
+                right: 1rem;
+                width: 42px;
+                height: 42px;
+            }
+
+            .footer {
+                padding: 3rem 1rem 1.5rem;
+            }
+        }
+
+        /* Small mobile */
+        @media (max-width: 380px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 0.95rem;
+            }
+
+            .section-title {
+                font-size: 1.6rem;
+            }
+
+            .profile-photo-wrapper {
+                max-width: 240px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ========== NAVIGATION ========== -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="#home" class="nav-logo">Literary<span>Journey</span></a>
+            <ul class="nav-links">
+                <li><a href="#home" class="active">Home</a></li>
+                <li><a href="#profile">Profile</a></li>
+                <li><a href="#analyses">Analyses</a></li>
+                <li><a href="#favorite">Favorite</a></li>
+                <li><a href="#summary">Summary</a></li>
+                <li><a href="#reflection">Reflection</a></li>
+            </ul>
+            <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+        <div class="mobile-nav" id="mobileNav">
+            <a href="#home">Home</a>
+            <a href="#profile">Student Profile</a>
+            <a href="#analyses">Literary Analyses</a>
+            <a href="#favorite">Favorite Masterpiece</a>
+            <a href="#summary">Summary of Learning</a>
+            <a href="#reflection">Personal Reflection</a>
+        </div>
+    </nav>
+
+    <!-- ========== HERO ========== -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <div class="hero-badge">Great Books — Final Project</div>
+            <h1>My Literary <em>Journey</em></h1>
+            <p>A digital portfolio showcasing my learning experiences, literary analyses, insights, and personal
+                reflections throughout the Great Books course.</p>
+            <a href="#profile" class="hero-cta">
+                Explore My Portfolio
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M7 17L17 7" />
+                    <path d="M7 7h10v10" />
+                </svg>
+            </a>
+        </div>
+        <div class="scroll-indicator">
+            <span>Scroll</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                <path d="M12 5v14M5 12l7 7 7-7" />
+            </svg>
+        </div>
+    </section>
+
+    <!-- ========== STUDENT PROFILE ========== -->
+    <section class="section section-alt" id="profile">
+        <div class="container">
+            <div class="section-header fade-in">
+                <span class="section-number">Part I</span>
+                <h2 class="section-title">Student Profile</h2>
+                <p class="section-subtitle">A brief introduction about myself as a student and reader of literature</p>
+                <div class="divider"></div>
+            </div>
+            <div class="profile-grid fade-in">
+                <div class="profile-photo-wrapper">
+                    <div class="profile-photo">
+                        <img src="profile-photo.jpg" alt="John Wilkins D. Alcantara">
+                    </div>
+                </div>
+                <div class="profile-info">
+                    <h3>John Wilkins Alcantara</h3>
+                    <p class="profile-meta">BSCS — 1st Year | Great Books-GEC-GB-NRs</p>
+
+                    <div class="profile-section">
+                        <h4>About Me</h4>
+                        <p>I am a passionate and curious student who finds immense joy in discovering worlds through
+                            literature. From an early age, stories have been my compass — guiding me through different
+                            cultures, eras, and philosophies. As a reader, I gravitate toward narratives that challenge
+                            my understanding of human nature and the moral complexities that shape civilizations.</p>
+                    </div>
+
+                    <div class="profile-section">
+                        <h4>My Literary Interests</h4>
+                        <p>My literary interests span epic poetry, mythology, philosophical fiction, and historical
+                            narratives. I am particularly drawn to works that explore the tension between duty and
+                            desire, the hero's journey, and the timeless struggle between good and evil. Outside of
+                            class, I enjoy reading contemporary novels, creative non-fiction, and graphic novels that
+                            re-imagine classical stories for modern audiences.</p>
+                        <div class="profile-tags">
+                            <span class="profile-tag">Epic Poetry</span>
+                            <span class="profile-tag">Mythology</span>
+                            <span class="profile-tag">Philosophical Fiction</span>
+                            <span class="profile-tag">Historical Narratives</span>
+                            <span class="profile-tag">Creative Non-Fiction</span>
+                            <span class="profile-tag">Graphic Novels</span>
+                        </div>
+                    </div>
+
+                    <div class="profile-section">
+                        <h4>My Great Books Experience</h4>
+                        <p>Enrolling in Great Books was a transformative decision. I expected the course to simply
+                            introduce me to famous literary works, but it became so much more — it taught me how to
+                            <em>see</em> literature through multiple lenses, to question the assumptions embedded in
+                            narratives, and to recognize that the dilemmas faced by characters thousands of years ago
+                            remain startlingly relevant today. This portfolio represents the culmination of that journey
+                            — a record of growth, discovery, and deepened appreciation for the written word.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== LITERARY ANALYSES ========== -->
+    <section class="section" id="analyses">
+        <div class="container">
+            <div class="section-header fade-in">
+                <span class="section-number">Part II</span>
+                <h2 class="section-title">Literary Analyses</h2>
+                <p class="section-subtitle">A compilation of seven literary analyses accomplished throughout the course
+                </p>
+                <div class="divider"></div>
+            </div>
+            <div class="analyses-grid fade-in">
+
+                <!-- ===== Analysis 1 ===== -->
+                <div class="analysis-card" onclick="openModal(0)">
+                    <div class="analysis-card-image"
+                        style="background-image:url('job38.jpg'); background-size:cover; background-position:center;">
+                        <div class="analysis-card-number">1</div>
+                        <div class="analysis-card-lens">Reader-Response Criticism</div>
+                    </div>
+                    <div class="analysis-card-body">
+                        <h3>Voice Out of the Whirlwind (Job 38)</h3>
+                        <p class="analysis-card-author">by Biblical / Traditional</p>
+                        <p>The "Voice Out of the Whirlwind" in Job 38 is one of the most powerful passages in all of
+                            ancient literature. After chapters of anguished debate between Job and his friends about the
+                            nature of suffering and divine justice, God finally speaks — not with comforting answers,
+                            but with a torrent of rhetorical questions that challenge the very foundations of human
+                            understanding.</p>
+                        <button class="read-more-btn">Read Full Analysis <svg width="14" height="14" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+                                <path d="M5 12h14M12 5l7 7-7 7" />
+                            </svg></button>
+                    </div>
+                </div>
+
+                <!-- ===== Analysis 2 ===== -->
+                <div class="analysis-card" onclick="openModal(1)">
+                    <div class="analysis-card-image"
+                        style="background-image:url('panchatantra.jpg'); background-size:cover; background-position:center;">
+                        <div class="analysis-card-number">2</div>
+                        <div class="analysis-card-lens">Moral-Philosophical Criticism</div>
+                    </div>
+                    <div class="analysis-card-body">
+                        <h3>The Panchatantra</h3>
+                        <p class="analysis-card-author">by Vishnu Sharma (attributed)</p>
+                        <p>The Panchatantra, one of the oldest collections of interrelated animal fables in world
+                            literature, was originally composed in Sanskrit around the 3rd century BCE. Attributed to
+                            the scholar Vishnu Sharma, the text was designed as a practical manual for educating young
+                            princes in the art of governance, diplomacy, and wise living — all disguised within charming
+                            animal stories.</p>
+                        <button class="read-more-btn">Read Full Analysis <svg width="14" height="14" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+                                <path d="M5 12h14M12 5l7 7-7 7" />
+                            </svg></button>
+                    </div>
+                </div>
+
+                <!-- ===== Analysis 3 ===== -->
+                <div class="analysis-card" onclick="openModal(2)">
+                    <div class="analysis-card-image"
+                        style="background-image:url('mahabharata.jpg'); background-size:cover; background-position:center;">
+                        <div class="analysis-card-number">3</div>
+                        <div class="analysis-card-lens">Archetypal / Mythological Criticism</div>
+                    </div>
+                    <div class="analysis-card-body">
+                        <h3>The Mahabharata</h3>
+                        <p class="analysis-card-author">by Vyasa (traditionally attributed)</p>
+                        <p>The Mahabharata is not merely an epic — it is a civilization compressed into verse. With over
+                            100,000 couplets, it is the longest poem ever written, and its scope encompasses war,
+                            philosophy, love, duty, and the very nature of dharma (cosmic law). At its heart is the
+                            devastating war between the Pandavas and the Kauravas — cousins whose rivalry destroys an
+                            entire generation.</p>
+                        <button class="read-more-btn">Read Full Analysis <svg width="14" height="14" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+                                <path d="M5 12h14M12 5l7 7-7 7" />
+                            </svg></button>
+                    </div>
+                </div>
+
+                <!-- ===== Analysis 4 ===== -->
+                <div class="analysis-card" onclick="openModal(3)">
+                    <div class="analysis-card-image"
+                        style="background-image:url('iliad.jpg'); background-size:cover; background-position:center;">
+                        <div class="analysis-card-number">4</div>
+                        <div class="analysis-card-lens">Formalist / New Criticism</div>
+                    </div>
+                    <div class="analysis-card-body">
+                        <h3>The Iliad</h3>
+                        <p class="analysis-card-author">by Homer</p>
+                        <p>Homer's Iliad, composed around the 8th century BCE, chronicles a few pivotal weeks during the
+                            tenth year of the Trojan War. Yet this narrow temporal focus belies the epic's enormous
+                            thematic ambition: it is, at its core, a meditation on rage, honor, mortality, and what it
+                            means to be human in a world governed by capricious gods.</p>
+                        <button class="read-more-btn">Read Full Analysis <svg width="14" height="14" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+                                <path d="M5 12h14M12 5l7 7-7 7" />
+                            </svg></button>
+                    </div>
+                </div>
+
+                <!-- ===== Analysis 5 ===== -->
+                <div class="analysis-card" onclick="openModal(4)">
+                    <div class="analysis-card-image"
+                        style="background-image:url('odyssey.jpg'); background-size:cover; background-position:center;">
+                        <div class="analysis-card-number">5</div>
+                        <div class="analysis-card-lens">Psychoanalytic Criticism</div>
+                    </div>
+                    <div class="analysis-card-body">
+                        <h3>The Odyssey</h3>
+                        <p class="analysis-card-author">by Homer</p>
+                        <p>If the Iliad is a poem about rage and glory, the Odyssey is its psychological counterpart — a
+                            poem about longing, identity, and the perilous journey homeward. Odysseus' ten-year voyage
+                            from Troy to Ithaca is not merely a geographical odyssey but a profound exploration of the
+                            human psyche.</p>
+                        <button class="read-more-btn">Read Full Analysis <svg width="14" height="14" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+                                <path d="M5 12h14M12 5l7 7-7 7" />
+                            </svg></button>
+                    </div>
+                </div>
+
+                <!-- ===== Analysis 6 ===== -->
+                <div class="analysis-card" onclick="openModal(5)">
+                    <div class="analysis-card-image"
+                        style="background-image:url('song-of-roland.jpg'); background-size:cover; background-position:center;">
+                        <div class="analysis-card-number">6</div>
+                        <div class="analysis-card-lens">Historical Criticism</div>
+                    </div>
+                    <div class="analysis-card-body">
+                        <h3>The Song of Roland</h3>
+                        <p class="analysis-card-author">by Anonymous (Old French, c. 1100 CE)</p>
+                        <p>The Song of Roland (<em>La Chanson de Roland</em>), composed around 1100 CE, is the earliest
+                            and most celebrated of the French <em>chansons de geste</em> ("songs of heroic deeds"). It
+                            dramatizes the historical Battle of Roncevaux Pass (778 CE), in which the rearguard of
+                            Charlemagne's army was ambushed — though the poem transforms a minor military disaster into
+                            an epic clash between Christendom and Islam.</p>
+                        <button class="read-more-btn">Read Full Analysis <svg width="14" height="14" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+                                <path d="M5 12h14M12 5l7 7-7 7" />
+                            </svg></button>
+                    </div>
+                </div>
+
+                <!-- ===== Analysis 7 ===== -->
+                <div class="analysis-card" onclick="openModal(6)">
+                    <div class="analysis-card-image"
+                        style="background-image:url('tale-of-genji.jpg'); background-size:cover; background-position:center;">
+                        <div class="analysis-card-number">7</div>
+                        <div class="analysis-card-lens">Feminist Criticism</div>
+                    </div>
+                    <div class="analysis-card-body">
+                        <h3>The Tale of Genji</h3>
+                        <p class="analysis-card-author">by Murasaki Shikibu</p>
+                        <p>Murasaki Shikibu's <em>The Tale of Genji</em> (c. 1000–1012 CE) is widely considered the
+                            world's first novel. Written by a woman of the Heian court, it chronicles the life, loves,
+                            and political entanglements of the "shining prince" Hikaru Genji. Yet beneath its elegant
+                            surface lies a penetrating examination of gender, power, and the limited agency available to
+                            women in aristocratic Japan.</p>
+                        <button class="read-more-btn">Read Full Analysis <svg width="14" height="14" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+                                <path d="M5 12h14M12 5l7 7-7 7" />
+                            </svg></button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== MODAL FOR FULL ANALYSIS ========== -->
+    <div class="modal-overlay" id="analysisModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal()" aria-label="Close">&times;</button>
+            <span class="modal-lens-badge" id="modalLens"></span>
+            <h2 id="modalTitle"></h2>
+            <p class="modal-author" id="modalAuthor"></p>
+            <div class="analysis-text" id="modalBody"></div>
+        </div>
+    </div>
+
+    <!-- ========== FAVORITE MASTERPIECE ========== -->
+    <section class="section section-alt" id="favorite">
+        <div class="container">
+            <div class="section-header fade-in">
+                <span class="section-number">Part III</span>
+                <h2 class="section-title">My Favorite Literary Masterpiece</h2>
+                <p class="section-subtitle">The literary work that resonated with me the most throughout this course</p>
+                <div class="divider"></div>
+            </div>
+            <div class="favorite-layout fade-in">
+                <div class="favorite-image">
+                    <img src="mahabharata.jpg" alt="The Mahabharata"
+                        style="width:100%; height:100%; object-fit:cover; border-radius:inherit;">
+                </div>
+                <div class="favorite-info">
+                    <h3>The Mahabharata</h3>
+                    <p class="favorite-author">by Vyasa (traditionally attributed)</p>
+
+                    <h4>Overview</h4>
+                    <p>The Mahabharata is the longest epic poem in world literature, comprising over 100,000 couplets
+                        organized into 18 books (<em>parvas</em>). At its narrative core is the devastating war between
+                        two branches of a royal family — the virtuous Pandavas and the envious Kauravas — for control of
+                        the kingdom of Hastinapura. But the epic is far more than a war story: it encompasses philosophy
+                        (the Bhagavad Gita), law, ethics, cosmology, and countless sub-narratives that explore every
+                        facet of human experience.</p>
+
+                    <h4>Why This Is My Favorite</h4>
+                    <p>Among all the masterpieces studied in this course, the Mahabharata resonated with me most deeply
+                        because of its radical honesty about the human condition. Unlike epics that draw clear lines
+                        between heroes and villains, the Mahabharata insists on moral ambiguity. The "good" Pandavas
+                        resort to deception to win the war; the "evil" Duryodhana raises legitimate grievances about
+                        inheritance. Even Krishna, the divine guide, endorses strategies that bend ethical rules. This
+                        complexity mirrors real life, where moral choices are rarely simple and consequences are rarely
+                        clean.</p>
+                    <p>I was particularly moved by the figure of Arjuna on the eve of battle — a warrior paralyzed by
+                        the knowledge that doing his duty means destroying people he loves. His crisis is universal: we
+                        all face moments where our obligations conflict with our compassion, where there is no choice
+                        that does not cause pain. The Bhagavad Gita's response — act with integrity according to your
+                        dharma, but surrender attachment to results — struck me as one of the most profound pieces of
+                        wisdom I have encountered in any literature.</p>
+
+                    <div class="favorite-quote">
+                        <p>"What is found here may be found elsewhere; what is not found here will not be found
+                            elsewhere."</p>
+                        <cite>— Vyasa, The Mahabharata</cite>
+                    </div>
+
+                    <h4>Themes, Characters &amp; Lessons</h4>
+                    <p><strong>Dharma vs. Adharma:</strong> The epic constantly asks, "What is the right thing to do?" —
+                        and refuses to give a single, easy answer. <strong>The Cost of War:</strong> Victory in the
+                        Mahabharata comes at a terrible price. The Pandavas win the kingdom but lose almost everyone
+                        they love, demonstrating that war destroys victors and vanquished alike. <strong>Karma and
+                            Consequence:</strong> Every action — noble or ignoble — reverberates through generations.
+                        The epic shows how cycles of vengeance and ambition perpetuate suffering.
+                        <strong>Krishna:</strong> As divine counselor, Krishna embodies the paradox of a god who
+                        participates in human affairs without resolving their messiness. He guides but does not dictate.
+                        <strong>Draupadi:</strong> One of literature's most powerful female characters, Draupadi
+                        challenges patriarchal injustice and demands accountability from the men who failed to protect
+                        her dignity. <strong>Bhishma:</strong> The grandpatriarch bound by his vow, Bhishma illustrates
+                        how rigid adherence to personal honor can inadvertently perpetuate systemic injustice.
+                    </p>
+
+                    <h4>Personal Connections</h4>
+                    <p>Reading the Mahabharata taught me that wisdom does not mean having all the answers — it means
+                        having the courage to act thoughtfully in the face of uncertainty. I realized that the conflicts
+                        I face in my own life — between loyalty to family and personal ambition, between speaking the
+                        truth and keeping the peace — echo the very dilemmas the Pandavas grappled with thousands of
+                        years ago. The epic gave me a framework for thinking about these tensions not as problems to
+                        solve but as conditions of being human. It showed me that even the greatest heroes are flawed,
+                        that victory always comes at a cost, and that the most important battles are the ones we fight
+                        within ourselves. The Mahabharata is a text I know I will return to throughout my life, and each
+                        time, I expect it will reveal something new.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== SUMMARY OF LEARNING ========== -->
+    <section class="section" id="summary">
+        <div class="container">
+            <div class="section-header fade-in">
+                <span class="section-number">Part IV</span>
+                <h2 class="section-title">Summary of Learning</h2>
+                <p class="section-subtitle">Key knowledge, concepts, and skills acquired throughout the Great Books
+                    course</p>
+                <div class="divider"></div>
+            </div>
+            <div class="summary-grid fade-in">
+
+                <div class="summary-card">
+                    <div class="summary-card-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round">
+                            <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" />
+                            <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
+                        </svg>
+                    </div>
+                    <h3>Literary Masterpieces Across Eras</h3>
+                    <p>Throughout the Great Books course, I gained a rich understanding of literary masterpieces
+                        spanning vastly different historical periods, geographies, and cultural traditions. From the
+                        ancient Hebrew poetry of Job 38 to the courtly elegance of Heian Japan in <em>The Tale of
+                            Genji</em>, from the Sanskrit wisdom of the Panchatantra and the Mahabharata to the Greek
+                        heroism of Homer's Iliad and Odyssey, and from the medieval European valor of the Song of Roland
+                        — I learned that great literature transcends borders and centuries. Each work offered a unique
+                        window into how different civilizations understood justice, honor, love, death, and the divine.
+                        I discovered that while cultural contexts vary enormously, the fundamental human questions
+                        remain remarkably consistent across all eras: Who am I? What is my duty? How should I face
+                        suffering, and what gives life meaning?</p>
+                </div>
+
+                <div class="summary-card">
+                    <div class="summary-card-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round">
+                            <circle cx="11" cy="11" r="8" />
+                            <path d="M21 21l-4.35-4.35" />
+                        </svg>
+                    </div>
+                    <h3>Literary Lenses &amp; Approaches</h3>
+                    <p>One of the most valuable skills I developed was the ability to analyze literature through
+                        multiple critical lenses. I learned that a single text can yield profoundly different — and
+                        equally valid — interpretations depending on the analytical framework applied.
+                        <strong>Reader-Response Criticism</strong> taught me that meaning is co-created between text and
+                        reader. <strong>Moral-Philosophical Criticism</strong> revealed the ethical architectures
+                        embedded in narrative. <strong>Archetypal Criticism</strong> uncovered universal patterns of the
+                        hero's journey and psychological integration. <strong>Formalist/New Criticism</strong> showed me
+                        how structure, language, and imagery generate meaning independent of authorial intention.
+                        <strong>Psychoanalytic Criticism</strong> exposed the unconscious dimensions of character and
+                        narrative. <strong>Historical Criticism</strong> demonstrated how texts are products of — and
+                        interventions in — their cultural moments. And <strong>Feminist Criticism</strong> illuminated
+                        the gender dynamics and power structures that shape literary representation. Together, these
+                        lenses gave me a versatile analytical toolkit that I can apply far beyond the study of
+                        literature.
+                    </p>
+                </div>
+
+                <div class="summary-card">
+                    <div class="summary-card-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round">
+                            <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z" />
+                            <path d="M2 12h20" />
+                            <path
+                                d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+                        </svg>
+                    </div>
+                    <h3>Literature as a Mirror of Humanity</h3>
+                    <p>Perhaps the most profound lesson of the course was the recognition that literature is not an
+                        abstract academic exercise — it is a living record of human experience. The great books we
+                        studied are "great" not because they are old or prestigious, but because they continue to speak
+                        to the deepest concerns of human existence. The Mahabharata's exploration of dharma is relevant
+                        to anyone navigating ethical complexity today. The Odyssey's journey home resonates with anyone
+                        who has struggled to find their place in the world. The Song of Roland's meditation on sacrifice
+                        speaks to every generation that has grappled with the costs of loyalty. Job 38's unanswered
+                        questions about suffering echo in every hospital room, every courtroom, every quiet moment of
+                        doubt. I came to appreciate literature as a form of collective memory — a way for humanity to
+                        preserve, transmit, and interrogate its accumulated wisdom across millennia.</p>
+                </div>
+
+                <div class="summary-card">
+                    <div class="summary-card-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round">
+                            <path
+                                d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 1 1 7.072 0l-.548.547A3.374 3.374 0 0 0 14 18.469V19a2 2 0 1 1-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+                        </svg>
+                    </div>
+                    <h3>Critical Thinking &amp; Analytical Skills</h3>
+                    <p>The course significantly strengthened my critical thinking, interpretation, and analytical
+                        capabilities. I learned to read slowly and deliberately, to resist the temptation of
+                        surface-level understanding, and to ask probing questions of every text: What assumptions does
+                        this narrative make? Whose voices are included, and whose are silenced? How does the form of the
+                        work shape its meaning? What does this text reveal about the society that produced it? I became
+                        more comfortable with ambiguity and complexity — recognizing that the best literature often
+                        resists easy conclusions and rewards sustained engagement. I also developed stronger writing and
+                        communication skills through the process of composing literary analyses: organizing complex
+                        ideas, supporting interpretations with textual evidence, and articulating insights with clarity
+                        and precision. These skills extend well beyond literary study — they are competencies I will
+                        carry into every area of my academic, professional, and personal life.</p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== PERSONAL REFLECTION ========== -->
+    <section class="section section-alt" id="reflection">
+        <div class="container">
+            <div class="section-header fade-in">
+                <span class="section-number">Part V</span>
+                <h2 class="section-title">Personal Reflection</h2>
+                <p class="section-subtitle">A meaningful reflection on my overall learning journey in Great Books</p>
+                <div class="divider"></div>
+            </div>
+            <div class="reflection-content fade-in">
+
+                <div class="reflection-question">
+                    <h3><span>1</span> Understanding &amp; Appreciation of Literature</h3>
+                    <p>Before this course, I viewed literature primarily as entertainment — a way to pass the time with
+                        compelling stories. Great Books fundamentally changed that perspective. I now understand that
+                        every literary masterpiece is a carefully constructed artifact — shaped by its historical
+                        context, cultural values, and the author's philosophical commitments. I learned to appreciate
+                        not just <em>what</em> a story says, but <em>how</em> it says it: the deliberate choices of
+                        structure, imagery, voice, and form that create layers of meaning beneath the surface narrative.
+                        Reading has become an active, analytical process rather than a passive one. I no longer ask only
+                        "What happened?" but also "Why was it told this way? What does the form reveal? What assumptions
+                        does the text make about its reader?" This shift from consumption to critical engagement has
+                        made my reading deeper, slower, and infinitely more rewarding. Literature is no longer just
+                        stories — it is a conversation across centuries, and I have learned how to participate in it.
+                    </p>
+                </div>
+
+                <div class="reflection-question">
+                    <h3><span>2</span> Challenges &amp; How I Overcame Them</h3>
+                    <p>The most significant challenge was the sheer difficulty and cultural distance of many texts.
+                        Works like the Mahabharata, the Iliad, and Job 38 were composed in civilizations vastly
+                        different from my own, and their narrative conventions, moral frameworks, and literary styles
+                        sometimes felt alien and impenetrable. Long verse epics demanded a kind of patience I was not
+                        accustomed to as a modern reader. I also struggled initially with the application of literary
+                        lenses — it felt unnatural to analyze a text I was still trying to understand on a basic level.
+                    </p>
+                    <p>I overcame these challenges through several strategies. First, I learned to approach unfamiliar
+                        texts with curiosity rather than frustration, treating confusion as an invitation to dig deeper
+                        rather than a reason to give up. Second, I found that re-reading key passages multiple times —
+                        each time through a different lens — gradually revealed layers of meaning that were invisible on
+                        the first encounter. Third, class discussions and conversations with classmates were invaluable:
+                        hearing other perspectives helped me see dimensions of the text I had missed entirely. The
+                        challenge of difficulty became, in itself, one of the course's greatest gifts — it taught me
+                        that understanding requires effort, and that the effort is always worth it.</p>
+                </div>
+
+                <div class="reflection-question">
+                    <h3><span>3</span> Most Influential Literary Lens</h3>
+                    <p>Of all the critical approaches we studied, <strong>Archetypal / Mythological Criticism</strong>
+                        influenced my interpretation of literature the most profoundly. This lens revealed the deep
+                        structural patterns — the hero's journey, the descent into the underworld, the wise mentor, the
+                        shadow antagonist, the reluctant hero's transformation — that recur across cultures and
+                        centuries. It showed me that humanity has been telling the same essential stories since the
+                        beginning of recorded language, and that these recurring archetypes reflect something
+                        fundamental about the human psyche and our collective unconscious.</p>
+                    <p>Archetypal Criticism gave me a powerful framework for connecting seemingly unrelated works: I
+                        could see the thread linking Arjuna's paralysis on the battlefield of Kurukshetra to Odysseus'
+                        perilous journey home to Roland's defiant last stand at Roncevaux Pass. Each hero faces a
+                        threshold, undergoes a trial, confronts a shadow, and emerges transformed — or tragically
+                        destroyed. This lens made the "great conversation" of literature feel truly unified, revealing
+                        that despite the enormous differences in language, culture, and historical context, these
+                        masterpieces are all grappling with the same fundamental questions about what it means to be
+                        human.</p>
+                </div>
+
+                <div class="reflection-question">
+                    <h3><span>4</span> Realizations About Life &amp; Society</h3>
+                    <p>Several profound realizations emerged from my journey through these great books:</p>
+                    <ul>
+                        <li><strong>Moral complexity is the norm, not the exception.</strong> The greatest works we
+                            studied — especially the Mahabharata — refuse to offer easy answers to ethical dilemmas.
+                            They taught me that real wisdom lies not in certainty but in the willingness to sit with
+                            ambiguity, to weigh competing goods and unavoidable harms, and to act thoughtfully even when
+                            no choice is perfectly right.</li>
+                        <li><strong>Suffering is universal, but how we make meaning from it varies.</strong> From Job's
+                            unanswered questions to Achilles' rage to Arjuna's despair, every culture has grappled with
+                            the reality of pain. What differs is not the fact of suffering but the frameworks —
+                            religious, philosophical, mythological — that different civilizations build to understand
+                            and endure it.</li>
+                        <li><strong>Perspective is everything.</strong> The same event can be heroic or tragic, just or
+                            unjust, depending on whose eyes we see it through. Feminist Criticism of <em>The Tale of
+                                Genji</em> taught me this most powerfully: what the text celebrates as aesthetic
+                            refinement can also be read as patriarchal control. This realization has made me a more
+                            empathetic and careful thinker.</li>
+                        <li><strong>The past is never truly past.</strong> The dilemmas, values, and struggles depicted
+                            in works composed thousands of years ago remain startlingly relevant. Human nature, at its
+                            core, has not changed — we still wrestle with duty, desire, justice, mortality, and the
+                            search for meaning.</li>
+                    </ul>
+                </div>
+
+                <div class="reflection-question">
+                    <h3><span>5</span> Applying Lessons Beyond the Classroom</h3>
+                    <p>The lessons of Great Books are not confined to the classroom — they are tools for living. The
+                        <strong>critical thinking skills</strong> I developed — the ability to analyze complex
+                        information, consider multiple perspectives, identify hidden assumptions, and construct
+                        well-supported arguments — will serve me in every academic discipline and professional context,
+                        from research papers to workplace problem-solving to informed civic participation.
+                    </p>
+                    <p>The <strong>empathy</strong> I gained from inhabiting the perspectives of characters across
+                        cultures and centuries will make me a more thoughtful colleague, leader, and human being.
+                        Understanding that every person carries a story as complex as any epic poem will shape how I
+                        listen, collaborate, and make decisions that affect others.</p>
+                    <p>The <strong>appreciation for ambiguity and complexity</strong> will help me navigate a world that
+                        rarely offers simple answers — in my career, in my relationships, and in my responsibilities as
+                        a member of society. I have learned to be comfortable with uncertainty and to resist the allure
+                        of oversimplification.</p>
+                    <p>And perhaps most importantly, the sheer <strong>joy of reading</strong> — of losing myself in a
+                        great story and emerging changed — is a gift I will carry for the rest of my life. Great Books
+                        did not just teach me about literature; it taught me about what it means to be human, and it
+                        gave me a lifelong practice for continuing that education: the simple, profound act of picking
+                        up a book and beginning to read.</p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== FOOTER ========== -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-logo">Literary<span>Journey</span></div>
+            <p>Great Books — Final Project: Digital Website Portfolio</p>
+            <p>John Wilkins Alcantara · BSCS — 1st Year | Great Books-GEC-GB-NRs</p>
+            <div class="footer-divider"></div>
+            <p class="footer-bottom">&copy; 2026 My Literary Journey.</p>
+        </div>
+    </footer>
+
+    <!-- ========== BACK TO TOP ========== -->
+    <button class="back-to-top" id="backToTop" aria-label="Back to top">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+            stroke-linecap="round">
+            <path d="M18 15l-6-6-6 6" />
+        </svg>
+    </button>
+
+    <!-- ========== JAVASCRIPT ========== -->
+    <script>
+        // ===== DATA: Full analyses =====
+        const analysesData = [
+            {
+                title: "Voice Out of the Whirlwind (Job 38)",
+                author: "by Biblical / Traditional",
+                lens: "Reader-Response Criticism",
+                body: `<p>The "Voice Out of the Whirlwind" in Job 38 is one of the most powerful passages in all of ancient literature. After chapters of anguished debate between Job and his friends about the nature of suffering and divine justice, God finally speaks — not with comforting answers, but with a torrent of rhetorical questions that challenge the very foundations of human understanding.</p>
+                <p>Through the lens of <strong>Reader-Response Criticism</strong>, the impact of this passage lies not in a fixed, objective meaning but in the deeply personal experience each reader brings to the text. When God asks, <em>"Where were you when I laid the earth's foundation?"</em> the reader is confronted with the limits of their own knowledge. The emotional response — whether humility, awe, frustration, or peace — becomes the meaning itself.</p>
+                <p>For readers who have experienced personal suffering, God's speech may feel dismissive or even cruel: Job receives no explanation for his pain. Yet for others, the sheer grandeur of the cosmic imagery — the foundations of the earth, the storehouses of snow, the birth of the sea — transforms the question of suffering into a question of perspective. The text does not resolve the problem of evil; instead, it reframes the reader's relationship to the unknowable.</p>
+                <p>What makes this passage enduringly relevant is its refusal to simplify. By applying Reader-Response Criticism, we see that Job 38 is not a closed theological argument but an open literary experience — one that changes each time it is read, depending on the reader's own trials, faith, and philosophical disposition. The whirlwind does not answer Job; it answers <em>to</em> the reader.</p>`
+            },
+            {
+                title: "The Panchatantra",
+                author: "by Vishnu Sharma (attributed)",
+                lens: "Moral-Philosophical Criticism",
+                body: `<p>The Panchatantra, one of the oldest collections of interrelated animal fables in world literature, was originally composed in Sanskrit around the 3rd century BCE. Attributed to the scholar Vishnu Sharma, the text was designed as a practical manual for educating young princes in the art of governance, diplomacy, and wise living — all disguised within charming animal stories.</p>
+                <p>A <strong>Moral-Philosophical</strong> reading reveals that each tale operates on multiple levels. On the surface, animals act out entertaining dramas of trickery and friendship; beneath, they encode sophisticated lessons about power, trust, strategy, and the consequences of foolishness. The five books — "Loss of Friends," "Winning of Friends," "Of Crows and Owls," "Loss of Gains," and "Ill-Considered Action" — form a complete philosophical curriculum.</p>
+                <p>Consider the famous story of the monkey and the crocodile: the monkey's cleverness in claiming his heart was left in a tree teaches that quick thinking and presence of mind can overcome brute force. Philosophically, this endorses <em>buddhi</em> (intelligence) over <em>bala</em> (strength), a principle that recurs throughout Indian philosophy.</p>
+                <p>What distinguishes the Panchatantra from simple moral fables is its unflinching pragmatism. Unlike Aesop's fables, which often champion straightforward virtue, the Panchatantra acknowledges that the world is complex and sometimes survival requires cunning. The text does not moralize simplistically — it prepares the reader for a world where ethical navigation demands both wisdom and adaptability. Through Moral-Philosophical Criticism, we can appreciate the Panchatantra not merely as children's literature but as a profound treatise on the art of living.</p>`
+            },
+            {
+                title: "The Mahabharata",
+                author: "by Vyasa (traditionally attributed)",
+                lens: "Archetypal / Mythological Criticism",
+                body: `<p>The Mahabharata is not merely an epic — it is a civilization compressed into verse. With over 100,000 couplets, it is the longest poem ever written, and its scope encompasses war, philosophy, love, duty, and the very nature of dharma (cosmic law). At its heart is the devastating war between the Pandavas and the Kauravas — cousins whose rivalry destroys an entire generation.</p>
+                <p>Through <strong>Archetypal / Mythological Criticism</strong>, the Mahabharata reveals itself as a repository of universal archetypes. Arjuna embodies the reluctant hero who must confront his own moral paralysis before battle. Krishna serves as the divine mentor — the wise guide who appears at the threshold of transformation to illuminate the hero's path. Duryodhana represents the shadow — the antagonist whose envy and pride mirror the darker impulses within every human heart.</p>
+                <p>The Bhagavad Gita, embedded within the epic, is the archetypal moment of initiation: Arjuna stands between two armies, paralyzed by the knowledge that victory means destroying his own family. Krishna's counsel — to act according to dharma without attachment to outcomes — represents the universal mythological lesson of transcending ego for a higher purpose.</p>
+                <p>Carl Jung would recognize in the Mahabharata the process of individuation: the integration of light and shadow, duty and desire, action and renunciation. The epic does not offer easy answers; even the victorious Pandavas emerge scarred and sorrowful. This ambiguity is the hallmark of great mythological literature — it refuses to reduce the human experience to simple binaries. The Mahabharata endures because its archetypes speak to every culture's struggle with justice, mortality, and the search for meaning.</p>`
+            },
+            {
+                title: "The Iliad",
+                author: "by Homer",
+                lens: "Formalist / New Criticism",
+                body: `<p>Homer's Iliad, composed around the 8th century BCE, chronicles a few pivotal weeks during the tenth year of the Trojan War. Yet this narrow temporal focus belies the epic's enormous thematic ambition: it is, at its core, a meditation on rage, honor, mortality, and what it means to be human in a world governed by capricious gods.</p>
+                <p>A <strong>Formalist / New Criticism</strong> approach focuses on the text itself — its structure, language, imagery, and internal tensions — rather than external biographical or historical contexts. From this perspective, the Iliad is a masterwork of literary architecture. The poem opens with the word <em>mēnin</em> ("rage") — Achilles' wrath is not merely a theme but the structural engine of the entire narrative. Every event radiates outward from this rage: the withdrawal from battle, the death of Patroclus, the slaying of Hector, and the final, heartbreaking scene of Priam kneeling before his son's killer.</p>
+                <p>Homer's use of epic similes transforms the battlefield into a canvas of poetic beauty. Warriors fall "like leaves in autumn"; armies clash "like waves against a rocky shore." These similes serve a crucial formalist function: they create aesthetic distance from the horror of war while simultaneously heightening its emotional impact. The tension between beauty and brutality is the poem's central paradox.</p>
+                <p>The Iliad's formal structure also demands attention to parallelism. Achilles and Hector mirror each other — both are warriors of supreme skill trapped by codes of honor that lead to their destruction. Through close reading, we see that the poem's meaning emerges from these structural relationships rather than from any single character's journey. The Iliad does not argue for or against war; its form <em>enacts</em> the tragic beauty of human striving in the face of inevitable death.</p>`
+            },
+            {
+                title: "The Odyssey",
+                author: "by Homer",
+                lens: "Psychoanalytic Criticism",
+                body: `<p>If the Iliad is a poem about rage and glory, the Odyssey is its psychological counterpart — a poem about longing, identity, and the perilous journey homeward. Odysseus' ten-year voyage from Troy to Ithaca is not merely a geographical odyssey but a profound exploration of the human psyche.</p>
+                <p><strong>Psychoanalytic Criticism</strong>, drawing on the theories of Freud and Jung, reveals the Odyssey as a narrative of psychological integration. Each island Odysseus visits represents a different psychic challenge. The Lotus-Eaters embody the temptation of forgetfulness — the desire to abandon responsibility and sink into pleasurable oblivion (the id's pull toward pure pleasure). Circe, who transforms men into swine, represents the danger of surrendering rational identity to base instincts.</p>
+                <p>The descent into the Underworld (the <em>Nekyia</em>) is the epic's most psychoanalytically rich episode. In Jungian terms, Odysseus' journey to Hades is a <em>katabasis</em> — a descent into the unconscious where he confronts the shades of his past: his dead mother, fallen comrades, and the prophet Tiresias. This encounter with the shadow realm is necessary for psychological wholeness; Odysseus cannot reach home until he has faced what lies beneath.</p>
+                <p>The Sirens' song offers perhaps the most elegant psychoanalytic symbol: Odysseus wants to hear the song of absolute knowledge and pleasure but knows it means destruction. His solution — binding himself to the mast — is a metaphor for the ego's mediation between desire and self-preservation. The Odyssey ultimately argues that identity is not a fixed essence but a narrative constructed through trials, choices, and the integration of opposing forces within the self. Homecoming, in this reading, is not merely arrival at Ithaca — it is the achievement of psychic wholeness.</p>`
+            },
+            {
+                title: "The Song of Roland",
+                author: "by Anonymous (Old French, c. 1100 CE)",
+                lens: "Historical Criticism",
+                body: `<p>The Song of Roland (<em>La Chanson de Roland</em>), composed around 1100 CE, is the earliest and most celebrated of the French <em>chansons de geste</em> ("songs of heroic deeds"). It dramatizes the historical Battle of Roncevaux Pass (778 CE), in which the rearguard of Charlemagne's army was ambushed — though the poem transforms a minor military disaster into an epic clash between Christendom and Islam.</p>
+                <p><strong>Historical Criticism</strong> compels us to examine the vast distance between the historical event and its literary representation. Historically, the attackers at Roncevaux were Basque Christians, not Saracens. The poem's transformation of the enemy into Muslim forces reflects the ideological climate of the 11th century — the era of the First Crusade (1096–1099). The Song of Roland is thus not a record of the 8th century but a product of the 11th, shaped by the religious fervor and political anxieties of its own time.</p>
+                <p>Roland himself embodies the feudal ideal of <em>prouesse</em> (martial valor) and <em>loyauté</em> (loyalty to one's lord). His fatal flaw — refusing to blow the Oliphant horn to summon Charlemagne's aid — is simultaneously an act of supreme courage and catastrophic pride. Historical Criticism helps us understand that this tension reflects a genuine medieval debate about the nature of heroism: is it nobler to die gloriously or to exercise prudent judgment?</p>
+                <p>The poem also serves a political function: it legitimizes Charlemagne's empire and, by extension, the authority of the French monarchy. By reading the text within its historical context, we understand that the Song of Roland is not merely a thrilling war narrative but a sophisticated work of ideological persuasion — one that shaped European identity for centuries and whose echoes can still be heard in modern narratives of national heroism and sacrifice.</p>`
+            },
+            {
+                title: "The Tale of Genji",
+                author: "by Murasaki Shikibu",
+                lens: "Feminist Criticism",
+                body: `<p>Murasaki Shikibu's <em>The Tale of Genji</em> (c. 1000–1012 CE) is widely considered the world's first novel. Written by a woman of the Heian court, it chronicles the life, loves, and political entanglements of the "shining prince" Hikaru Genji. Yet beneath its elegant surface lies a penetrating examination of gender, power, and the limited agency available to women in aristocratic Japan.</p>
+                <p>A <strong>Feminist Criticism</strong> reading reveals that while Genji is the titular protagonist, it is the women who give the novel its emotional depth and moral complexity. Characters like Lady Murasaki (Genji's young ward whom he grooms to become his ideal wife), Lady Rokujō (whose suppressed rage manifests as a vengeful spirit), and the Akashi Lady (who sacrifices proximity to her daughter for social advancement) expose the ways women's lives were shaped — and constrained — by male desire and social expectation.</p>
+                <p>Genji's romantic conquests, celebrated within the text as evidence of his refined sensibility (<em>mono no aware</em>, "the pathos of things"), take on a more troubling dimension through a feminist lens. His "adoption" of the young Murasaki, whom he raises to become his perfect companion, can be read as an exercise in patriarchal control — molding a woman to fit a male ideal rather than allowing her autonomous development.</p>
+                <p>Yet the novel's feminist significance extends beyond its content to its authorship. Murasaki Shikibu, writing in a literary culture dominated by Chinese-language male scholarship, chose to write in Japanese — the so-called "women's language." This choice was itself a feminist act: she created a masterpiece in a marginalized medium, and in doing so, invented the novel form. Through Feminist Criticism, The Tale of Genji emerges not only as a beautiful work of art but as a profound document of women's experience, agency, and creative power in a patriarchal world.</p>`
+            }
+        ];
+
+        // ===== NAVBAR SCROLL =====
+        const navbar = document.getElementById('navbar');
+        const backToTop = document.getElementById('backToTop');
+        window.addEventListener('scroll', () => {
+            navbar.classList.toggle('scrolled', window.scrollY > 50);
+            backToTop.classList.toggle('visible', window.scrollY > 600);
+        });
+
+        // ===== HAMBURGER MENU =====
+        const hamburger = document.getElementById('hamburger');
+        const mobileNav = document.getElementById('mobileNav');
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            mobileNav.classList.toggle('show');
+            document.body.style.overflow = mobileNav.classList.contains('show') ? 'hidden' : '';
+        });
+        // Close mobile nav on link click
+        mobileNav.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('active');
+                mobileNav.classList.remove('show');
+                document.body.style.overflow = '';
+            });
+        });
+
+        // ===== ACTIVE NAV LINK =====
+        const sections = document.querySelectorAll('section[id]');
+        const navLinks = document.querySelectorAll('.nav-links a');
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const top = section.offsetTop - 120;
+                if (window.scrollY >= top) current = section.getAttribute('id');
+            });
+            navLinks.forEach(link => {
+                link.classList.toggle('active', link.getAttribute('href') === '#' + current);
+            });
+        });
+
+        // ===== BACK TO TOP =====
+        backToTop.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // ===== MODAL =====
+        const modal = document.getElementById('analysisModal');
+        function openModal(index) {
+            const data = analysesData[index];
+            document.getElementById('modalLens').textContent = data.lens;
+            document.getElementById('modalTitle').textContent = data.title;
+            document.getElementById('modalAuthor').textContent = data.author;
+            document.getElementById('modalBody').innerHTML = data.body;
+            modal.style.display = 'block';
+            requestAnimationFrame(() => modal.classList.add('show'));
+            document.body.style.overflow = 'hidden';
+        }
+        function closeModal() {
+            modal.classList.remove('show');
+            setTimeout(() => {
+                modal.style.display = 'none';
+                document.body.style.overflow = '';
+            }, 300);
+        }
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) closeModal();
+        });
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeModal();
+        });
+
+        // ===== SCROLL ANIMATIONS =====
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+    </script>
+</body>
+
+</html>
